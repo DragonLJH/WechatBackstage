@@ -47,4 +47,17 @@ public class WXService {
 		}
 		return flag;
 	}
+	
+	@Transactional(rollbackFor = RuntimeException.class)//异常回滚
+	public boolean delectWxByNumber(WX wx) {
+		boolean flag = false;
+		int first = wxDao.queryWxByUsername(wx.getUsername()).size();
+		wxDao.delectWxByNumber(wx);
+		int secend = wxDao.queryWxByUsername(wx.getUsername()).size();
+		if(first > secend) {
+			flag = true;
+		}
+		return flag;
+	}
+	
 }

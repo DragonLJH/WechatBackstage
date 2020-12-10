@@ -21,4 +21,7 @@ public interface WXDao {
 	@Delete("DELETE FROM wx WHERE username = #{username};")
 	public void delectWx(String username);
 	
+	@Delete("DELETE FROM wx WHERE username = #{username} and wxnumber = #{wxnumber};")
+	public void delectWxByNumber(WX wx);
+	
 }

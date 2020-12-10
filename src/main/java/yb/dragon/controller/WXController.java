@@ -35,10 +35,20 @@ public class WXController {
 		return flag;
 	}
 	
-	@RequestMapping("/delectWx")
+	@RequestMapping("/delectAllWx")
 	public boolean delectWx(@PathParam("username") String username) {
 		boolean flag = false;
 		flag = wxService.delectWx(username);
+		return flag;
+	}
+	
+	@RequestMapping("/delectWx")
+	public boolean delectWxByNumber(@PathParam("username") String username,@PathParam("wxnumber") String wxnumber) {
+		WX wx = new WX();
+		wx.setUsername(username);
+		wx.setWxnumber(wxnumber);
+		boolean flag = false;
+		flag = wxService.delectWxByNumber(wx);
 		return flag;
 	}
 	
