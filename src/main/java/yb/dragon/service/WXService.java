@@ -12,52 +12,50 @@ import yb.dragon.dao.WXDao;
 
 @Service
 public class WXService {
-	
+
 	@Autowired
 	private WXDao wxDao;
 
-	
-	public List<WX> queryWxByUsername(String username){
+	public List<WX> queryWxByUsername(String username) {
 		List<WX> list = new ArrayList<WX>();
 		list = wxDao.queryWxByUsername(username);
 		return list;
-		
 	}
-	
-	@Transactional(rollbackFor = RuntimeException.class)//异常回滚
+
+	@Transactional(rollbackFor = RuntimeException.class) // 异常回滚
 	public boolean creatWx(WX wx) {
 		boolean flag = false;
 		int first = wxDao.queryWxByUsername(wx.getUsername()).size();
 		wxDao.creatWx(wx);
 		int secend = wxDao.queryWxByUsername(wx.getUsername()).size();
-		if(first < secend) {
+		if (first < secend) {
 			flag = true;
 		}
 		return flag;
 	}
 
-	@Transactional(rollbackFor = RuntimeException.class)//异常回滚
+	@Transactional(rollbackFor = RuntimeException.class) // 异常回滚
 	public boolean delectWx(String username) {
 		boolean flag = false;
 		int first = wxDao.queryWxByUsername(username).size();
 		wxDao.delectWx(username);
 		int secend = wxDao.queryWxByUsername(username).size();
-		if(first > secend) {
+		if (first > secend) {
 			flag = true;
 		}
 		return flag;
 	}
-	
-	@Transactional(rollbackFor = RuntimeException.class)//异常回滚
+
+	@Transactional(rollbackFor = RuntimeException.class) // 异常回滚
 	public boolean delectWxByNumber(WX wx) {
 		boolean flag = false;
 		int first = wxDao.queryWxByUsername(wx.getUsername()).size();
 		wxDao.delectWxByNumber(wx);
 		int secend = wxDao.queryWxByUsername(wx.getUsername()).size();
-		if(first > secend) {
+		if (first > secend) {
 			flag = true;
 		}
 		return flag;
 	}
-	
+
 }

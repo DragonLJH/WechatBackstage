@@ -9,6 +9,6 @@ public class WechatBackstage1Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WechatBackstage1Application.class, args);
-	}
+	}	
 
 }
