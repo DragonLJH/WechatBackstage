@@ -1,6 +1,7 @@
 package yb.dragon.controller;
 
-import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,13 +17,27 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@RequestMapping("/queryUser")
+	public List<User> queryUser(){
+		List<User> list = new ArrayList<User>();
+		list = userService.queryUser();
+		return list;
+	}
 
 	@RequestMapping("/queryUserByAcc")
 	public User queryUserByAcc(User auser) {
-		String username = auser.getUsername();
-		User user = userService.queryUserByAcc(username);
+		User user = userService.queryUserByAcc(auser.getUsername());
 		return user;
 	}
+	@RequestMapping("/queryUserByDomain")
+	public User queryUserByDomain(User auser) {
+		User user = userService.queryUserByDomain(auser.getDomain());
+		return user;
+		
+	}
+	
+
 
 	/**
 	 * 
@@ -41,9 +56,16 @@ public class UserController {
 	}
 
 	@RequestMapping("/delectUser")
-	public boolean delectUser(@PathParam("username") String username) {
+	public boolean delectUser(User user) {
 		boolean flag = false;
-		flag = userService.delectUser(username);
+		flag = userService.delectUser(user.getUsername());
+		return flag;
+	}
+	
+	@RequestMapping("/updateUserByAcc")
+	public boolean updateUserByAcc(User user) {
+		boolean flag = false;
+		flag = userService.updateUserByAcc(user);
 		return flag;
 	}
 

@@ -3,8 +3,6 @@ package yb.dragon.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,36 +17,40 @@ public class WXController {
 	
 	@Autowired
 	private WXService wxService;
+	
+//	@Autowired
+//	private UserService userService;
 
 	@RequestMapping("/queryWx")
-	public List<WX> queryWxByUsername(@PathParam("username") String username){
+	public List<WX> queryWxByUsername(WX wx){
 		List<WX> list = new ArrayList<WX>();
-		list = wxService.queryWxByUsername(username);
+		list = wxService.queryWxByUsername(wx.getUsername());
 		return list;
 	}
 	
+//	@RequestMapping("/queryWXUserByDomain")
+//	public List<WX> queryWXUserByDomain(@PathParam("domain")String domain) {
+//		User user = userService.queryUserByDomain(domain);
+//		List<WX> list = wxService.queryWxByUsername(user.getUsername());
+//		return list;
+//	}
+	
 	@RequestMapping("/creatWx")
-	public boolean creatWx(@PathParam("username") String username,@PathParam("wxnumber") String wxnumber) {
-		WX wx = new WX();
-		wx.setUsername(username);
-		wx.setWxnumber(wxnumber);
+	public boolean creatWx(WX wx) {
 		boolean flag = false;
 		flag = wxService.creatWx(wx);
 		return flag;
 	}
 	
 	@RequestMapping("/delectAllWx")
-	public boolean delectWx(@PathParam("username") String username) {
+	public boolean delectWx(WX wx) {
 		boolean flag = false;
-		flag = wxService.delectWx(username);
+		flag = wxService.delectWx(wx.getUsername());
 		return flag;
 	}
 	
 	@RequestMapping("/delectWx")
-	public boolean delectWxByNumber(@PathParam("username") String username,@PathParam("wxnumber") String wxnumber) {
-		WX wx = new WX();
-		wx.setUsername(username);
-		wx.setWxnumber(wxnumber);
+	public boolean delectWxByNumber(WX wx) {
 		boolean flag = false;
 		flag = wxService.delectWxByNumber(wx);
 		return flag;
