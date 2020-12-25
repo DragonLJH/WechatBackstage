@@ -22,7 +22,7 @@ public class WXService {
 		return list;
 	}
 
-	@Transactional(rollbackFor = RuntimeException.class) // 异常回滚
+	@Transactional(rollbackFor = Exception.class) // 异常回滚
 	public boolean creatWx(WX wx) {
 		boolean flag = false;
 		int first = wxDao.queryWxByUsername(wx.getUsername()).size();
@@ -34,7 +34,7 @@ public class WXService {
 		return flag;
 	}
 
-	@Transactional(rollbackFor = RuntimeException.class) // 异常回滚
+	@Transactional(rollbackFor = Exception.class) // 异常回滚
 	public boolean delectWx(String username) {
 		boolean flag = false;
 		int first = wxDao.queryWxByUsername(username).size();
@@ -46,7 +46,7 @@ public class WXService {
 		return flag;
 	}
 
-	@Transactional(rollbackFor = RuntimeException.class) // 异常回滚
+	@Transactional(rollbackFor = Exception.class) // 异常回滚
 	public boolean delectWxByNumber(WX wx) {
 		boolean flag = false;
 		int first = wxDao.queryWxByUsername(wx.getUsername()).size();

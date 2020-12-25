@@ -34,9 +34,7 @@ public class UserService {
 
 	/**
 	 * 
-	 * 参数user 先判断user是否已存在数据库 
-	 * 1存在不再创建，返回false 
-	 * 2不存在则创建，返回true
+	 * 参数user 先判断user是否已存在数据库 1存在不再创建，返回false 2不存在则创建，返回true
 	 * 
 	 * @param user
 	 * @return flag
@@ -66,15 +64,20 @@ public class UserService {
 	@Transactional(rollbackFor = RuntimeException.class) // 异常回滚
 	public boolean updateUserByAcc(User user) {
 		boolean flag = false;
-		String firstStr = userDao.queryUserByAcc(user.getUsername()).getDomain() == null ? ""
-				: userDao.queryUserByAcc(user.getUsername()).getDomain();
-		userDao.updateUserByAcc(user);
-		String secondStr = userDao.queryUserByAcc(user.getUsername()).getDomain() == null ? ""
-				: userDao.queryUserByAcc(user.getUsername()).getDomain();
-		userDao.updateUserByAcc(user);
-		if (!firstStr.equals(secondStr)) {
-			flag = true;
+		if (userDao.queryUserByDomain(user.getDomain()) instanceof User) {
+
+		} else {
+			String firstStr = userDao.queryUserByAcc(user.getUsername()).getDomain() == null ? ""
+					: userDao.queryUserByAcc(user.getUsername()).getDomain();
+			userDao.updateUserByAcc(user);
+			String secondStr = userDao.queryUserByAcc(user.getUsername()).getDomain() == null ? ""
+					: userDao.queryUserByAcc(user.getUsername()).getDomain();
+			userDao.updateUserByAcc(user);
+			if (!firstStr.equals(secondStr)) {
+				flag = true;
+			}
 		}
+
 		return flag;
 	}
 
